@@ -22,36 +22,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($_POST['email'] && !empty($_POST['email'])) {
 
-            $_SESSION['email'] = $email;
+            $dbh = new PDO('mysql:host=localhost;dbname=markup', 'root', '');
+            $sth = $dbh->prepare('SELECT email FROM users WHERE email = :email');
+            $sth->execute([':email' => $email]);
+            $emailFromDb = $sth->fetch(PDO::FETCH_ASSOC);
 
-            if ($_POST['password'] && !empty($_POST['password'])) {
+            if (!$emailFromDb['email']) {
 
-                $_SESSION['password'] = $passwordHash;
+                $_SESSION['email'] = $email;
 
-                if ($passwordConfirm && !empty($passwordConfirm)) {
+                if ($_POST['password'] && !empty($_POST['password'])) {
 
-                    if ($password === $passwordConfirm) {
+                    $_SESSION['password'] = $passwordHash;
 
-                        $dbh = new PDO('mysql:host=localhost;dbname=markup', 'root', '');
-                        $sth = $dbh->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
-                        $sth->execute(
-                            [
-                                ':name' => $name,
-                                ':email' => $email,
-                                ':password' => $passwordHash,
-                            ]
-                        );
+                    if ($passwordConfirm && !empty($passwordConfirm)) {
+
+                        if ($password === $passwordConfirm) {
+
+                            $sth = $dbh->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+                            $sth->execute(
+                                [
+                                    ':name' => $name,
+                                    ':email' => $email,
+                                    ':password' => $passwordHash,
+                                ]
+                            );
+
+                        } else {
+                            $errors['password_confirmation'] = 'Пароли не совпали!';
+                        }
 
                     } else {
-                        $errors['password_confirmation'] = 'Пароли не совпали!';
+                        $errors['password'] = 'Подтвердите пароль!';
                     }
 
                 } else {
-                    $errors['password'] = 'Подтвердите пароль!';
+                    $errors['password'] = 'Введите пароль!';
                 }
 
             } else {
-                $errors['password'] = 'Введите пароль!';
+                $errors['name'] = 'Такой email уже существует!';
             }
 
         } else {
