@@ -1,5 +1,11 @@
+<?php
+
+$comments = include_once __DIR__ . '/data.php';
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +23,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.php">
                     Project
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,16 +62,21 @@
                                 Комментарий успешно добавлен
                               </div>
 
+                                <?php foreach ($comments as $comment): ?>
+
                                 <div class="media">
-                                  <img src="img/no-user.jpg" class="mr-3" alt="..." width="64" height="64">
-                                  <div class="media-body">
-                                    <h5 class="mt-0">John Doe</h5> 
-                                    <span><small>12/10/2025</small></span>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe aspernatur, ullam doloremque deleniti, sequi obcaecati.
-                                    </p>
-                                  </div>
+                                    <img src="img/<?= $comment['avatar']; ?>" class="mr-3" alt="..." width="64" height="64">
+                                    <div class="media-body">
+                                        <h5 class="mt-0"><?= $comment['username']; ?></h5>
+                                        <span><small><?= $comment['created_at']; ?></small></span>
+                                        <p>
+                                            <?= $comment['content']; ?>
+                                        </p>
+                                    </div>
                                 </div>
+
+                                <?php endforeach; ?>
+
                             </div>
                         </div>
                     </div>
