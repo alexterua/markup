@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             [
                                 ':name' => $name,
                                 ':email' => $email,
-                                ':password' => $password,
+                                ':password' => $passwordHash,
                             ]
                         );
 
