@@ -5,7 +5,7 @@ require_once __DIR__ . '/functions.php';
 session_start();
 
 $dbh = new PDO('mysql:host=localhost;dbname=markup;charset=utf8', 'root', '');
-$sql = 'SELECT * FROM comments';
+$sql = 'SELECT * FROM comments ORDER BY id DESC';
 $sth = $dbh->prepare($sql);
 $sth->execute();
 $comments = $sth->fetchAll(PDO::FETCH_ASSOC);
