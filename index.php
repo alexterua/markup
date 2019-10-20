@@ -1,6 +1,18 @@
 <?php
 
-$comments = include_once __DIR__ . '/data.php';
+require_once __DIR__ . '/functions.php';
+
+session_start();
+
+$dbh = new PDO('mysql:host=localhost;dbname=markup;charset=utf8', 'root', '');
+$sql = 'SELECT * FROM comments';
+$sth = $dbh->prepare($sql);
+$sth->execute();
+$comments = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_SESSION['errors']) {
+    $errors = $_SESSION['errors'];
+}
 
 ?>
 
@@ -58,20 +70,20 @@ $comments = include_once __DIR__ . '/data.php';
                             <div class="card-header"><h3>Комментарии</h3></div>
 
                             <div class="card-body">
+                            <?php if ($_SESSION['flashMessage']): ?>
                               <div class="alert alert-success" role="alert">
                                 Комментарий успешно добавлен
                               </div>
+                            <?php endif; ?>
 
                                 <?php foreach ($comments as $comment): ?>
 
                                 <div class="media">
                                     <img src="img/<?= $comment['avatar']; ?>" class="mr-3" alt="..." width="64" height="64">
                                     <div class="media-body">
-                                        <h5 class="mt-0"><?= $comment['username']; ?></h5>
+                                        <h5 class="mt-0"><?= $comment['author']; ?></h5>
                                         <span><small><?= $comment['created_at']; ?></small></span>
-                                        <p>
-                                            <?= $comment['content']; ?>
-                                        </p>
+                                        <p><?= $comment['message']; ?></p>
                                     </div>
                                 </div>
 
@@ -86,7 +98,7 @@ $comments = include_once __DIR__ . '/data.php';
                             <div class="card-header"><h3>Оставить комментарий</h3></div>
 
                             <div class="card-body">
-                                <form action="/store" method="post">
+                                <form action="/store.php" method="post">
                                     <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Имя</label>
                                     <input name="name" class="form-control" id="exampleFormControlTextarea1" />
