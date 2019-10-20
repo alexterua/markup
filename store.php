@@ -8,11 +8,16 @@ session_start();
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['name'] && !empty($_POST['name'])) {
 
-        $_SESSION['name'] = $_POST['name'];
+    // Data filtering
+    $name = htmlspecialchars($_POST['name']);
+    $message = htmlspecialchars($_POST['text']);
 
-        if ($_POST['text'] && !empty($_POST['text'])) {
+    if ($name && !empty($name)) {
+
+        $_SESSION['name'] = $name;
+
+        if ($message && !empty($message)) {
 
             // check for avatar
             if (empty($_POST['avatar'])) {
@@ -26,13 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sth = $dbh->prepare($sql);
             $sth->execute(
                 [
-                    'author' => $_POST['name'],
+                    'author' => $name,
                     'avatar' => $avatar,
-                    'message' => $_POST['text']
+                    'message' => $message
                 ]
             );
             // Show flash-message at index.php
-            $_SESSION['flashMessage'] = true;
+            $_SESSION['comment_added'] = true;
 
         } else {
             $errors['text'] = 'Введите сообщение!';

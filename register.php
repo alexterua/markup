@@ -37,7 +37,7 @@
                                 <a class="nav-link" href="login.html">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="register.html">Register</a>
+                                <a class="nav-link" href="register.php">Register</a>
                             </li>
                     </ul>
                 </div>
@@ -52,13 +52,13 @@
                             <div class="card-header">Register</div>
 
                             <div class="card-body">
-                                <form method="POST" action="">
+                                <form method="POST" action="auth.php">
 
                                     <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
 
                                         <div class="col-md-6">
-                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="" autofocus>
+                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus>
 
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>Ошибка валидации</strong>

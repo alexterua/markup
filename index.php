@@ -55,7 +55,7 @@ if ($_SESSION['errors']) {
                                 <a class="nav-link" href="login.html">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="register.html">Register</a>
+                                <a class="nav-link" href="register.php">Register</a>
                             </li>
                     </ul>
                 </div>
@@ -70,12 +70,12 @@ if ($_SESSION['errors']) {
                             <div class="card-header"><h3>Комментарии</h3></div>
 
                             <div class="card-body">
-                            <?php if ($_SESSION['flashMessage']): ?>
+                            <?php if ($_SESSION['comment_added']): ?>
                               <div class="alert alert-success" role="alert">
                                 Комментарий успешно добавлен
                               </div>
                             <?php endif; ?>
-                            <?php unset($_SESSION['flashMessage']); ?>
+                            <?php unset($_SESSION['comment_added']); ?>
 
                                 <?php foreach ($comments as $comment): ?>
 
