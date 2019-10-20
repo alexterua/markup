@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $_SESSION['password'] = $passwordHash;
 
-                    if ($passwordConfirm && !empty($passwordConfirm)) {
+                    if (mb_strlen($password) >= 6) {
 
-                        if ($password === $passwordConfirm) {
+                        if ($passwordConfirm && !empty($passwordConfirm)) {
 
-                            if (mb_strlen($password) >= 6) {
+                            if ($password === $passwordConfirm) {
 
                                 $sth = $dbh->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
                                 $sth->execute(
@@ -51,15 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 );
 
                             } else {
-                                $errors['password_confirmation'] = 'Пароль должен содержать не менее 6 символов!';
+                                $errors['password_confirmation'] = 'Пароли не совпали!';
                             }
 
                         } else {
-                            $errors['password_confirmation'] = 'Пароли не совпали!';
+                            $errors['password_confirmation'] = 'Подтвердите пароль!';
                         }
 
                     } else {
-                        $errors['password'] = 'Подтвердите пароль!';
+                        $errors['password'] = 'Пароль должен содержать не менее 6 символов!';
                     }
 
                 } else {
@@ -67,11 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
             } else {
-                $errors['name'] = 'Такой email уже существует!';
+                $errors['email'] = 'Такой email уже занят!';
             }
 
         } else {
-            $errors['name'] = 'Введите email!';
+            $errors['email'] = 'Введите email!';
         }
 
     } else {
@@ -79,7 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-header("Location: /");
+// if isset errors, write to session from show at form (at index page)
+if ($errors) {
+    $_SESSION['errors'] = $errors;
+}
+
+header("Location: /register.php");
 
 
 
