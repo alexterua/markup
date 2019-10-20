@@ -50,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     ]
                                 );
 
+                                header("Location: /");
+
                             } else {
                                 $errors['password_confirmation'] = 'Пароли не совпали!';
                             }
