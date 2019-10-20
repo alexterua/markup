@@ -8,7 +8,10 @@ session_start();
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['name']) {
+    if ($_POST['name'] && !empty($_POST['name'])) {
+
+        $_SESSION['name'] = $_POST['name'];
+
         if ($_POST['text'] && !empty($_POST['text'])) {
 
             // check for avatar

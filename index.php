@@ -102,14 +102,25 @@ if ($_SESSION['errors']) {
                                 <form action="/store.php" method="post">
                                     <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Имя</label>
-                                    <input name="name" class="form-control" id="exampleFormControlTextarea1" />
+                                    <input name="name" class="form-control" id="exampleFormControlTextarea1" value="<?= $_SESSION['name'] ?? ''; ?>"/>
                                   </div>
+                                    <?php if ($_SESSION['errors']['name']): ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            <?= $_SESSION['errors']['name']; ?>
+                                        </div>
+                                    <?php endif; ?>
                                   <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Сообщение</label>
                                     <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                   </div>
+                                    <?php if ($_SESSION['errors']['text']): ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            <?= $_SESSION['errors']['text']; ?>
+                                        </div>
+                                    <?php endif; ?>
                                   <button type="submit" class="btn btn-success">Отправить</button>
                                 </form>
+                                <?php unset($_SESSION['errors']); ?>
                             </div>
                         </div>
                     </div>
