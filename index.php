@@ -103,6 +103,7 @@ if ($_SESSION['errors']) {
                                     <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Имя</label>
                                     <input name="name" class="form-control" id="exampleFormControlTextarea1" value="<?= $_SESSION['name'] ?? ''; ?>"/>
+                                    <?php unset($_SESSION['name']); ?>
                                   </div>
                                     <?php if ($_SESSION['errors']['name']): ?>
                                         <div class="alert alert-danger" role="alert">
