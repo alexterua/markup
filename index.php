@@ -75,6 +75,7 @@ if ($_SESSION['errors']) {
                                 Комментарий успешно добавлен
                               </div>
                             <?php endif; ?>
+                            <?php unset($_SESSION['flashMessage']); ?>
 
                                 <?php foreach ($comments as $comment): ?>
 
