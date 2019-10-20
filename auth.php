@@ -39,14 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if ($password === $passwordConfirm) {
 
-                            $sth = $dbh->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
-                            $sth->execute(
-                                [
-                                    ':name' => $name,
-                                    ':email' => $email,
-                                    ':password' => $passwordHash,
-                                ]
-                            );
+                            if (mb_strlen($password) >= 6) {
+
+                                $sth = $dbh->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+                                $sth->execute(
+                                    [
+                                        ':name' => $name,
+                                        ':email' => $email,
+                                        ':password' => $passwordHash,
+                                    ]
+                                );
+
+                            } else {
+                                $errors['password_confirmation'] = 'Пароль должен содержать не менее 6 символов!';
+                            }
 
                         } else {
                             $errors['password_confirmation'] = 'Пароли не совпали!';
