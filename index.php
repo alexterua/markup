@@ -82,8 +82,8 @@ if ($_SESSION['errors']) {
                                 <div class="media">
                                     <img src="img/<?= $comment['avatar']; ?>" class="mr-3" alt="..." width="64" height="64">
                                     <div class="media-body">
-                                        <h5 class="mt-0"><?= $comment['author']; ?></h5>
-                                        <span><small><?= $comment['created_at']; ?></small></span>
+                                        <h5 class="mt-0"><?= $comment['author']; ?></h5
+                                        <span><small><?= getFormatDate($comment['created_at']); ?></small></span>
                                         <p><?= $comment['message']; ?></p>
                                     </div>
                                 </div>
