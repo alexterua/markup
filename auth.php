@@ -10,7 +10,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $password = $_POST['password'];
+    $password = htmlspecialchars($_POST['password']);
 
     if ($_POST['email'] && !empty($_POST['email'])) {
 
@@ -27,6 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($dataFromDb[0]['email']) {
 
                 if (password_verify($password, $dataFromDb[0]['password'])) {
+
+                    if (isset($_POST['remember']) && $_POST['remember'] === '1') {
+                        setcookie('password', $password, time() + 60 * 60 * 24);
+                        setcookie('email', $dataFromDb[0]['email'], time() + 60 * 60 * 24);
+                    }
+
+                    if ($_POST['remember'] === '') {
+                        // password in cookies - for educational purposes only
+                        setcookie('password', $dataFromDb[0]['password'], time() - 1);
+                        setcookie('email', $dataFromDb[0]['email'], time() - 1);
+                    }
 
                     header("Location: /");
                     die;

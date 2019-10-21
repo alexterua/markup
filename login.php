@@ -64,7 +64,7 @@ session_start();
                                         <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                                         <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control <?= $_SESSION['errors']['email'] ? 'is-invalid' : '' ?>" name="email"  autocomplete="email" autofocus value="<?= $_SESSION['email'] ?? ''; ?>">
+                                            <input id="email" type="email" class="form-control <?= $_SESSION['errors']['email'] ? 'is-invalid' : '' ?>" name="email"  autocomplete="email" autofocus value="<?= $_SESSION['email'] ?? $_COOKIE['email'] ?? ''; ?>">
 
                                                 <?php if ($_SESSION['errors']['email']): ?>
                                                 <span class="invalid-feedback" role="alert">
@@ -80,7 +80,7 @@ session_start();
                                         <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control <?= $_SESSION['errors']['password'] ? 'is-invalid' : '' ?>" name="password"  autocomplete="current-password">
+                                            <input id="password" type="password" class="form-control <?= $_SESSION['errors']['password'] ? 'is-invalid' : '' ?>" name="password"  autocomplete="current-password" value="<?= $_SESSION['password'] ?? $_COOKIE['password'] ?? ''; ?>">
                                             <?php if ($_SESSION['errors']['password']): ?>
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong><?= $_SESSION['errors']['password']; ?></strong>
@@ -92,7 +92,7 @@ session_start();
                                     <div class="form-group row">
                                         <div class="col-md-6 offset-md-4">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" >
+                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" value="1">
 
                                                 <label class="form-check-label" for="remember">
                                                     Remember Me

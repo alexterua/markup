@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = htmlspecialchars($_POST['name']);
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $password = $_POST['password'];
+    $password = htmlspecialchars($_POST['password']);
     $passwordConfirm = $_POST['password_confirmation'];
 
     if ($_POST['name'] && !empty($_POST['name'])) {
