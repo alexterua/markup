@@ -10,7 +10,6 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $password = $_POST['password'];
 
     if ($_POST['email'] && !empty($_POST['email'])) {
@@ -20,14 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_POST['password'] && !empty($_POST['password'])) {
 
             $dbh = new PDO('mysql:host=localhost;dbname=markup;charset=utf8', 'root', '');
-            $sql = 'SELECT email FROM users WHERE email=:email';
+            $sql = 'SELECT email, password FROM users WHERE email=:email';
             $sth = $dbh->prepare($sql);
             $sth->execute([':email' => $email]);
-            $emailFromDb = $sth->fetch(PDO::FETCH_ASSOC);
+            $dataFromDb = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-            if ($emailFromDb['email']) {
+            if ($dataFromDb[0]['email']) {
 
-                if (password_verify($password, $passwordHash)) {
+                if (password_verify($password, $dataFromDb[0]['password'])) {
 
                     header("Location: /");
                     die;
