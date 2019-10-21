@@ -58,7 +58,7 @@ var_dump($_SESSION['errors']);
                             <div class="card-header">Register</div>
 
                             <div class="card-body">
-                                <form method="POST" action="auth.php">
+                                <form method="POST" action="save_user.php">
 
                                     <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
