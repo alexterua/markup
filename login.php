@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -34,7 +40,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                             <li class="nav-item">
-                                <a class="nav-link" href="login.html">Login</a>
+                                <a class="nav-link" href="login.php">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="register.php">Register</a>
@@ -52,16 +58,21 @@
                             <div class="card-header">Login</div>
 
                             <div class="card-body">
-                                <form method="POST" action="">
+                                <form method="POST" action="auth.php">
 
                                     <div class="form-group row">
                                         <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                                         <div class="col-md-6">
-                                            <input id="email" type="email" class="form-control is-invalid " name="email"  autocomplete="email" autofocus >
+                                            <input id="email" type="email" class="form-control <?= $_SESSION['errors']['email'] ? 'is-invalid' : '' ?>" name="email"  autocomplete="email" autofocus value="<?= $_SESSION['email'] ?? ''; ?>">
+
+                                                <?php if ($_SESSION['errors']['email']): ?>
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>Ошибка валидации</strong>
+                                                    <strong><?= $_SESSION['errors']['email']; ?></strong>
                                                 </span>
+                                                <?php endif; ?>
+                                                <?php unset($_SESSION['email']); ?>
+
                                         </div>
                                     </div>
 
@@ -69,7 +80,12 @@
                                         <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control" name="password"  autocomplete="current-password">
+                                            <input id="password" type="password" class="form-control <?= $_SESSION['errors']['password'] ? 'is-invalid' : '' ?>" name="password"  autocomplete="current-password">
+                                            <?php if ($_SESSION['errors']['password']): ?>
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong><?= $_SESSION['errors']['password']; ?></strong>
+                                                </span>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
 
